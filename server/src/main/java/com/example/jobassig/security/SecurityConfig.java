@@ -27,6 +27,7 @@ public class SecurityConfig {
         http
                 // Disable CSRF for APIs and H2
                 .csrf(csrf -> csrf.disable())
+                .cors(cors -> {})
 
                 // Allow H2 console to display frames
                 .headers(headers -> headers.frameOptions(frame -> frame.disable()))
@@ -36,12 +37,12 @@ public class SecurityConfig {
 
                 // Authorization
                 .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers(
-//                                "/h2-console/**",
-//                                "/api/auth/**",
-//                                "/api/public/**"
-//                        ).permitAll()
-                        .anyRequest().permitAll()
+                        .requestMatchers(
+                                "/h2-console/**",
+                                "/api/auth/**",
+                                "/api/public/**"
+                        ).permitAll()
+                        .anyRequest().authenticated()
                 )
 
                 // Add JWT filter AFTER the H2 rules

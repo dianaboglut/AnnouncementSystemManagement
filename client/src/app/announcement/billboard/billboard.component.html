@@ -1,0 +1,19 @@
+<div class="billboard">
+  <h2>Public Announcements</h2>
+  @if (loading()) {
+    <p>Loading...</p>
+  } @else {
+    @for (item of items(); track item.id) {
+      <div class="announcement-card">
+        <h3>{{ item.title }}</h3>
+        <p>{{ item.content }}</p>
+        <p>{{item.topics}}</p>
+        <small>By {{ item.ownerUsername }}</small>
+        <small>Start Date: {{ item.startDate }}</small>
+        <small>End Date: {{ item.endDate }}</small>
+      </div>
+    } @empty {
+      <p>No active announcements.</p>
+    }
+  }
+</div>

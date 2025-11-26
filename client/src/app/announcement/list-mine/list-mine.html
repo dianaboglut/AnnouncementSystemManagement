@@ -1,0 +1,10 @@
+<h2>My Announcements</h2>
+
+<div *ngFor="let item of announcements$ | async">
+  <h3>{{ item.title }}</h3>
+  <p>{{ item.content }}</p>
+  <small>{{ item.startDate }} → {{ item.endDate }}</small>
+
+  <button [routerLink]="['/announcement', item.id, 'edit']">Edit</button>
+  <button (click)="delete(item.id)">Delete</button>
+</div>
