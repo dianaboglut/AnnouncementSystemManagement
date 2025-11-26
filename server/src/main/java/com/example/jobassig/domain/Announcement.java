@@ -25,6 +25,7 @@ public class Announcement {
     private boolean published;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner_id")
     private User owner;
 
     @ManyToMany
@@ -170,7 +171,7 @@ public class Announcement {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof User)) return false;
+        if (!(o instanceof Announcement)) return false;
         Announcement announcement = (Announcement) o;
         return Objects.equals(id, announcement.id) && Objects.equals(title, announcement.title);
     }
