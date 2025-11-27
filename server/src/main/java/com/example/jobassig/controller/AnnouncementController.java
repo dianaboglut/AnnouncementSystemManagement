@@ -28,6 +28,7 @@ public class AnnouncementController {
         return announcementService.getById(id, auth);
     }
 
+    @Secured("ROLE_USER")
     @GetMapping("/mine")
     public List<AnnouncementResponseDto> listMine(Authentication auth) {
         return announcementService.listMine(auth);

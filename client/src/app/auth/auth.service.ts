@@ -63,4 +63,8 @@ export class AuthService {
     const user = localStorage.getItem('auth_user');
     return user ? JSON.parse(user) : null;
   }
+
+  hasRole(role:string){
+    return this.currentUser()?.roles.includes(role);
+  }
 }

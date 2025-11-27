@@ -32,6 +32,12 @@ public class AnnouncementService {
                 .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
     }
 
+    private void assertOwnerOrAdmin(Announcement a, Authentication auth){
+        if (!isAdmin(auth) && !a.getOwner().getUsername().equals(auth.getName())) {
+            throw new RuntimeException("Forbidden");
+        }
+    }
+
     private Set<Topic> resolveTopics(Set<String> topicNames) {
         if (topicNames == null) return Set.of();
 
@@ -70,9 +76,7 @@ public class AnnouncementService {
     public AnnouncementResponseDto getById(long id, Authentication auth) {
         Announcement a = announcementJPARepository.findById(id).orElseThrow(() -> new RuntimeException("Announcement not found"));
 
-        if (!isAdmin(auth) && !a.getOwner().getUsername().equals(auth.getName())) {
-            throw new RuntimeException("Forbidden");
-        }
+        assertOwnerOrAdmin(a, auth);
 
         return new AnnouncementResponseDto(
                 a.getId(),
@@ -126,9 +130,7 @@ public class AnnouncementService {
         Announcement a = announcementJPARepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Announcement not found"));
 
-        if (!isAdmin(auth) && !a.getOwner().getUsername().equals(auth.getName())) {
-            throw new RuntimeException("Forbidden");
-        }
+        assertOwnerOrAdmin(a, auth);
 
         a.setTitle(dto.getTitle());
         a.setContent(dto.getContent());
@@ -155,9 +157,7 @@ public class AnnouncementService {
         Announcement a = announcementJPARepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Announcement not found"));
 
-        if (!isAdmin(auth) && !a.getOwner().getUsername().equals(auth.getName())) {
-            throw new RuntimeException("Forbidden");
-        }
+        assertOwnerOrAdmin(a, auth);
 
         announcementJPARepository.delete(a);
     }

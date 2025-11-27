@@ -1,25 +1,22 @@
 <header class="main-header">
   <h1>Billboard Management System</h1>
   <nav>
-    <!-- Always visible links -->
 
     @if(authService.currentUser()){
       <span class="user-info">Hello, {{ authService.currentUser()?.username }}</span>
     }
 
+    <a routerLink="/" class="nav-link">Home</a>
+
     @if(authService.currentUser()?.roles?.includes('ADMIN')){
       <a routerLink="/admin/users" class="nav-link">Users</a>
     }
 
-    <a routerLink="/" class="nav-link">Home</a>
-
-    <!-- Show these if NOT logged in -->
     @if (!authService.currentUser()) {
       <a routerLink="/login" class="nav-link">Login</a>
       <a routerLink="/register" class="nav-link">Register</a>
     }
 
-    <!-- Show these if LOGGED IN -->
     @if (authService.currentUser()) {
       <a routerLink="/announcement/mine" class="nav-link">My Announcements</a>
       <button routerLink="/announcement/new" class="nav-btn">Create</button>
@@ -29,10 +26,8 @@
 </header>
 
 <main>
-  <!-- Show Billboard only on home page or always? Assuming always for now -->
   @if (isHomePage()) {
     <app-billboard></app-billboard>
   }
-  <!-- This is where Login/Register components will appear when clicked -->
   <router-outlet></router-outlet>
 </main>
