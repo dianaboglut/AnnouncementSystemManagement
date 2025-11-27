@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import {FormsModule} from '@angular/forms'
 import {Router} from '@angular/router'
+import {CommonModule} from '@angular/common'
 import {AnnouncementCreateUpdate} from '../announcement.service'
 import {AnnouncementService} from '../announcement.service'
 
 @Component({
   selector: 'app-create',
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './create.html',
   styleUrl: './create.scss',
   standalone: true

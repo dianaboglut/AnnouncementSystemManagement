@@ -1,10 +1,31 @@
 <h2>My Announcements</h2>
 
-<div *ngFor="let item of announcements$ | async">
-  <h3>{{ item.title }}</h3>
-  <p>{{ item.content }}</p>
-  <small>{{ item.startDate }} → {{ item.endDate }}</small>
+<div class="list-mine-container">
+  <div
+    class="announcement-card"
+    *ngFor="let item of announcements$ | async"
+  >
+    <h3 class="title">{{ item.title }}</h3>
+    <p class="content">{{ item.content }}</p>
+    <small class="dates">{{ item.startDate | date:'yyyy-MM-dd' }} →
+      {{ item.endDate   | date:'yyyy-MM-dd' }}</small>
 
-  <button [routerLink]="['/announcement', item.id, 'edit']">Edit</button>
-  <button (click)="delete(item.id)">Delete</button>
+    <div class="topics">
+      <span class="topic" *ngFor="let t of item.topics">{{ t }}</span>
+    </div>
+
+    <div class="buttons">
+      <button
+        class="edit-btn"
+        [routerLink]="['/announcement', item.id, 'edit']">
+        Edit
+      </button>
+
+      <button
+        class="delete-btn"
+        (click)="delete(item.id)">
+        Delete
+      </button>
+    </div>
+  </div>
 </div>

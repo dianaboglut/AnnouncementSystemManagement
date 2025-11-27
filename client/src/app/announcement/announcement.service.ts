@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 export interface Announcement {
   id: number;
@@ -48,7 +49,9 @@ export class AnnouncementService {
   }
 
   listMine(): Observable<Announcement[]> {
-    return this.http.get<Announcement[]>(`${this.apiUrl}/mine`);
+    return this.http.get<Announcement[]>(`${this.apiUrl}/mine`).pipe(
+      tap(data => console.log('Mine',data))
+    );
   }
 
   update(id: number, announcement: AnnouncementCreateUpdate): Observable<Announcement> {

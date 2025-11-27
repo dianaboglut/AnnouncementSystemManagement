@@ -2,6 +2,15 @@
   <h1>Billboard Management System</h1>
   <nav>
     <!-- Always visible links -->
+
+    @if(authService.currentUser()){
+      <span class="user-info">Hello, {{ authService.currentUser()?.username }}</span>
+    }
+
+    @if(authService.currentUser()?.roles?.includes('ADMIN')){
+      <a routerLink="/admin/users" class="nav-link">Users</a>
+    }
+
     <a routerLink="/" class="nav-link">Home</a>
 
     <!-- Show these if NOT logged in -->
@@ -12,8 +21,8 @@
 
     <!-- Show these if LOGGED IN -->
     @if (authService.currentUser()) {
-      <span class="user-info">Hello, {{ authService.currentUser()?.username }}</span>
-      <button routerLink="/announcement/new" class="nav-btn">Create Announcement</button>
+      <a routerLink="/announcement/mine" class="nav-link">My Announcements</a>
+      <button routerLink="/announcement/new" class="nav-btn">Create</button>
       <button (click)="authService.logout()" class="logout-btn">Logout</button>
     }
   </nav>

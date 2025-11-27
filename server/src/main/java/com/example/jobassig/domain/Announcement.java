@@ -10,7 +10,7 @@ import java.util.Set;
 @Entity
 public class Announcement {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable=false)
@@ -172,7 +172,11 @@ public class Announcement {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Announcement)) return false;
-        Announcement announcement = (Announcement) o;
-        return Objects.equals(id, announcement.id) && Objects.equals(title, announcement.title);
+        Announcement other = (Announcement) o;
+        return id != null && id.equals(other.id);
+    }
+    @Override
+    public int hashCode() {
+        return 31; // constant is recommended by Hibernate
     }
 }

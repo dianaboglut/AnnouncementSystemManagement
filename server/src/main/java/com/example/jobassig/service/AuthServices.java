@@ -24,6 +24,7 @@ public class AuthServices {
     }
 
     public AuthResponse register(RegisterRequest req) {
+        System.out.println(encoder.encode("password"));
         if (users.findByUsername(req.getUsername()).isPresent()) {
             throw new RuntimeException("Username already taken");
         }
@@ -40,11 +41,12 @@ public class AuthServices {
     }
 
     public AuthResponse login(LoginRequest req) {
+        System.out.println(encoder.encode("password"));
         User u = users.findByUsername(req.getUsername())
-                .orElseThrow(() -> new RuntimeException("Bad credentials"));
+                .orElseThrow(() -> new RuntimeException("Bad credentials for user"));
 
         if (!encoder.matches(req.getPassword(), u.getPassword())) {
-            throw new RuntimeException("Bad credentials");
+            throw new RuntimeException("Bad credentials for password");
         }
 
         String token = jwt.generateToken(u.getUsername(), u.getRoles());

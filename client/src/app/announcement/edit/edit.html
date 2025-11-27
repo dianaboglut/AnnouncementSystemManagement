@@ -1,1 +1,60 @@
-<p>edit works!</p>
+<div class="create-container">
+  <h2 class="title">Edit Announcement</h2>
+
+  <form class="form-card" (ngSubmit)="submit()">
+    <div class="form-group">
+      <label>Title</label>
+      <input type="text" [(ngModel)]="form.title" name="title" placeholder="Enter a title" />
+    </div>
+
+    <div class="form-group">
+      <label>Content</label>
+      <textarea [(ngModel)]="form.content" name="content" placeholder="Write your announcement..."></textarea>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Start Date</label>
+        <input type="date" [(ngModel)]="form.startDate" name="startDate" />
+      </div>
+
+      <div class="form-group">
+        <label>End Date</label>
+        <input type="date" [(ngModel)]="form.endDate" name="endDate" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Topics</label>
+
+      <div class="topics-container">
+        <div class="topic" *ngFor="let t of form.topics; let i = index">
+          {{ t }}
+          <button type="button" class="remove" (click)="removeTopic(i)">×</button>
+        </div>
+
+        <input
+          type="text"
+          class="topic-input"
+          placeholder="Type a topic and press Enter"
+          [(ngModel)]="topicInput"
+          name="topicInput"
+          (keydown.enter)="addTopic($event)"
+        />
+      </div>
+    </div>
+
+
+    <div class="form-checkbox">
+      <label>
+        <input type="checkbox" [(ngModel)]="form.published" name="published" />
+        Publish immediately
+      </label>
+    </div>
+
+    <div class="buttons">
+      <button type="button" class="cancel-btn" (click)="cancel()">Cancel</button>
+      <button type="submit" class="save-btn" (click)="submit()">Save Changes</button>
+    </div>
+  </form>
+</div>
