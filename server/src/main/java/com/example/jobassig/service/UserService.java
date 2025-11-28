@@ -43,7 +43,6 @@ public class UserService {
         User u = userJPARepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        // Convert Set<String> → Set<Role>
         Set<Role> updatedRoles = roles.stream()
                 .map(Role::valueOf)
                 .collect(java.util.stream.Collectors.toSet());
@@ -51,7 +50,6 @@ public class UserService {
         u.setRoles(updatedRoles);
         userJPARepository.save(u);
 
-        // Convert Set<Role> → Set<String> for DTO
         Set<String> dtoRoles = updatedRoles.stream()
                 .map(Enum::name)
                 .collect(java.util.stream.Collectors.toSet());

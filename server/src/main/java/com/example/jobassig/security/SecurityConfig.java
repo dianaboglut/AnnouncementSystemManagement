@@ -30,17 +30,10 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http
-                // Disable CSRF for APIs and H2
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> {})
-
-                // Allow H2 console to display frames
                 .headers(headers -> headers.frameOptions(frame -> frame.disable()))
-
-                // No sessions — we use JWT
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-
-                // Authorization
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/h2-console/**",
@@ -50,8 +43,6 @@ public class SecurityConfig {
                         .requestMatchers("/api/users/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
-
-                // Add JWT filter AFTER the H2 rules
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
